@@ -53,6 +53,7 @@
 
   <Target Name="PublishSdkAssetsAndChecksums"
           BeforeTargets="Publish"
+          DependsOnTargets="GenerateFullNuGetVersion"
           Condition=" '$(PublishSdkAssetsAndChecksumsToBlob)' == 'true' ">
 
     <!-- If the sdk version is stabilized, then we should double publish the binaries to suffixed file names.
