@@ -14,6 +14,7 @@
   <?define ProductEdition   =   "001dotnet" ?>
   <?define LCID  = "$(var.ProductLanguage)"?>
   <?define DowngradeErrorMessage  = "A newer version is already installed; please uninstall it and re-run setup."?>
+  <?define InstallerVersion=200?>
 
   <?define Platform   =   "$(sys.BUILDARCH)" ?>
   <?if $(var.Platform)=x86?>
@@ -25,6 +26,12 @@
   <?define PlatformToken="X64"?>
   <?define WixQuietExec="WixQuietExec64"?>
   <?define Program_Files="ProgramFiles64Folder"?>
+  <?define Win64AttributeValue=yes?>
+  <?elseif $(var.Platform)=arm64?>
+  <?undef InstallerVersion?>
+  <?define InstallerVersion=500?>
+  <?define Program_Files="ProgramFiles64Folder"?>
+  <?define WixQuietExec="WixQuietExec64"?>
   <?define Win64AttributeValue=yes?>
   <?else?>
   <?error Invalid Platform ($(var.Platform))?>

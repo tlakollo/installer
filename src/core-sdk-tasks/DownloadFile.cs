@@ -108,6 +108,17 @@ namespace Microsoft.DotNet.Cli.Build
                             errorMessages.Add($"Problems downloading file from '{source}'. Does the resource exist on the storage? {httpResponse.StatusCode} : {httpResponse.ReasonPhrase}");
                             return false;
                         }
+                        else if ((int)httpResponse.StatusCode / 100 == 3)
+                        {
+                            var redirectUri = httpResponse.Headers.Location;
+                            if (!redirectUri.IsAbsoluteUri)
+                            {
+                                var requestUri = new Uri(source);
+                                redirectUri = new Uri(requestUri.GetLeftPart(UriPartial.Authority) + redirectUri);
+                            }
+                            Log.LogMessage(MessageImportance.High, $"Redirecting to {redirectUri}");
+                            httpResponse = await httpClient.GetAsync(redirectUri);
+                        }
 
                         httpResponse.EnsureSuccessStatusCode();
 

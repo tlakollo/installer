@@ -14,8 +14,8 @@
   <Target Name="SetupWixProperties" DependsOnTargets="GetCurrentRuntimeInformation">
     <!-- AcquireWix Properties -->
     <PropertyGroup>
-      <WixVersion>3.10.4</WixVersion>
-      <WixDownloadUrl>https://dotnetcli.azureedge.net/build/wix/wix.$(WixVersion).zip</WixDownloadUrl>
+      <WixVersion>3.14.0.4118</WixVersion>
+      <WixDownloadUrl>https://wixtoolset.org/downloads/v$(WixVersion)/wix314-binaries.zip</WixDownloadUrl>
       <WixRoot>$(ArtifactsDir)Tools/WixTools/$(WixVersion)</WixRoot>
       <WixDestinationPath>$(WixRoot)/WixTools.$(WixVersion).zip</WixDestinationPath>
       <WixDownloadSentinel>$(WixRoot)/WixDownload.$(WixVersion).sentinel</WixDownloadSentinel>
@@ -549,7 +549,7 @@
                             GenerateVSToolsNupkg;
                             GenerateVSToolsResolverNupkg;
                             GenerateSdkMSBuildExtensionsNupkg"
-        Condition=" '$(OS)' == 'Windows_NT' and !$(Architecture.StartsWith('arm')) " />
+        Condition=" '$(OS)' == 'Windows_NT' and '$(Architecture)' != 'arm' " />
 
 
 </Project>
